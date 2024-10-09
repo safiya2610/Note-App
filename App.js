@@ -1,21 +1,59 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+
+import AddNote from './components/AddNote';
+import Header from './components/Header';
+import Home from './components/Home';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Detail from './components/Detail';
+// Create a Stack Navigator
+const Stack = createStackNavigator();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    return (
+       <NavigationContainer>
+        <Stack.Navigator>
+          {/* Add your screens here */}
+          <Stack.Screen name="Home" component={Home}
+           options={{headerTitle:()=> <Header name="Notes"/>,
+             headerStyle:{
+                backgroundColor:'#F88',
+                height:120,
+             }
+           }}
+          />
+          <Stack.Screen name="AddNote" component={AddNote}
+           options={{headerTitle:()=> <Header name="Notes"/>,
+            headerStyle:{
+               backgroundColor:'#F88',
+               height:120,
+            }
+          }}
+          />
+          <Stack.Screen name="Detail" component={Detail}
+           options={{headerTitle:()=> <Header name="Edit Notes"/>,
+             headerStyle:{
+                backgroundColor:'#F88',
+                height:120,
+             }
+           }}
+          />
+       
+        </Stack.Navigator>
+       </NavigationContainer>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        padding: 20,
+    },
+    heading: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        textAlign: 'center',
+        color: '#fff',
+    },
 });
