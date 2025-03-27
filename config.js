@@ -1,23 +1,21 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import { API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, APP_ID, MEASUREMENT_ID } from '@env';
 
-// Your Firebase configuration object
 const firebaseConfig = {
-  apiKey: "AIzaSyAkdV5fbr_6KKxqRbC7Yzo-ZUnPpBxyf9g",
-  authDomain: "app-sn-7f59d.firebaseapp.com",
-  projectId: "app-sn-7f59d",
-  storageBucket: "app-sn-7f59d.appspot.com",
-  messagingSenderId: "266845195630",
-  appId: "1:266845195630:web:f7962cef27a4dbb92f057f",
-  measurementId: "G-2KDVM2519X"
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId: APP_ID,
+  measurementId: MEASUREMENT_ID
 };
 
-// Initialize Firebase
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-// Export Firestore instance
 const db = firebase.firestore();
 export { firebase, db };
