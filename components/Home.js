@@ -7,6 +7,7 @@ import { FlashList } from '@shopify/flash-list';
 const Home = () => {
     const [notes, setNotes] = useState([]);
     const navigation = useNavigation();
+    const [isLoading, setIsLoading] = useState(true);
 
     // Data fetch
     useEffect(() => {
@@ -17,28 +18,44 @@ const Home = () => {
                 newNotes.push({ note, title, id: doc.id });
             });
             setNotes(newNotes);
+            setIsLoading(false);
         });
 
         return () => unsubscribe();
     }, []);
+    console.log("notes", notes);
 
     return (
         <View style={styles.Cont}>
-            <FlashList
-                data={notes}
-                numColumns={2}
-                estimatedItemSize={100}
-                renderItem={({ item }) => (
-                    <View style={styles.noteView}>
-                        <Pressable 
-                        onPress={() => navigation.navigate('Detail', { item })}
-                        >
-                        <Text style={styles.noteTitle}>{item.title}</Text>
-                        <Text style={styles.noteDescription}>{item.note}</Text>
-                        </Pressable>
-                    </View>
-                )}
-            />
+            {
+                isLoading ? (
+                    <Text style={{
+                        textAlign: 'center',
+                        margin: 20,
+                        fontSize: 30,
+                    }}>Loading...</Text>
+                ) : notes.length === 0 ? (
+                    <Text style={{ textAlign: 'center', margin: 20, fontSize: 30 }}>No notes available</Text>
+                ) : (
+
+                    <FlashList
+                        data={notes}
+                        numColumns={2}
+                        estimatedItemSize={100}
+                        renderItem={({ item }) => (
+                            <View style={styles.noteView}>
+                                <Pressable
+                                    onPress={() => navigation.navigate('Detail', { item })}
+                                >
+                                    <Text style={styles.noteTitle}>{item.title}</Text>
+                                    <Text style={styles.noteDescription}>{item.note}</Text>
+                                </Pressable>
+                            </View>
+                        )}
+                    />
+
+                )
+            }
             <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddNote')}>
                 <Text style={styles.addButtonText}>Add Notes</Text>
             </TouchableOpacity>
@@ -76,14 +93,14 @@ const styles = StyleSheet.create({
     },
     addButton: {
         backgroundColor: '#87ceeb',
-        borderRadius: 30, 
+        borderRadius: 30,
         paddingVertical: 12,
         paddingHorizontal: 25,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 20,
         borderWidth: 2,
-        borderColor: '#0056b3', 
+        borderColor: '#0056b3',
         elevation: 3,
     },
     addButtonText: {
