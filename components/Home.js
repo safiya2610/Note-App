@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#0056b3',
         elevation: 3,
+        marginBottom:70,
     },
     addButtonText: {
         color: '#FFFFFF',
